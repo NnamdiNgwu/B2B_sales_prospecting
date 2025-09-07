@@ -563,3 +563,20 @@ src/
 ├── contexts/
 ├── constants/
 └── assets/
+
+
+
+brew install node
+
+npm create vite@latest
+
+select react
+select variant: typescript
+cd "Prospect AI"
+  npm install
+  npm run dev
+
+
+ Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
