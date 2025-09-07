@@ -4,11 +4,11 @@
 
 <a name="top"></a>
 <div align="center">
-<img src="./assets/ai.png">
+<img src="./assets/">
 
   [![Email](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:nnamdi.ngwu@yandex.com)
 
-  ![CI](https://github.com/NnamdiNgwu/ai_job_hunt/actions/workflows/ci.yml/badge.svg)
+  ![CI](https://github.com/NnamdiNgwu//actions/workflows/ci.yml/badge.svg)
 
 **🤖🔍 Your AI-powered B2B sales prospecting assistant. Automate lead generation, get personalized outreach recommendations, and close more deals faster.**
 
@@ -110,8 +110,6 @@ ProspectAI Navigator steps in as a game-changing solution to these challenges. I
 
 This file contains sensitive information like your LinkedIn credentials and LLM API keys. **Never share or commit this file to version control.**
 
--   `linkedin_email: [Your LinkedIn Email]`
--   `linkedin_password: [Your LinkedIn Password]`
 -   `llm_api_key: [Your OpenAI, Claude, or Gemini API key]`
     -   To obtain an API key, refer to the official documentation for [OpenAI](https://platform.openai.com/account/api-keys), [Anthropic (Claude)](https://console.anthropic.com/settings/keys), or [Google (Gemini)](https://ai.google.dev/gemini-api/docs/api-key).
     -   **Note:** For OpenAI, you need to add credit to your account to use the API. A free-tier account has strict rate limits that may cause errors.
