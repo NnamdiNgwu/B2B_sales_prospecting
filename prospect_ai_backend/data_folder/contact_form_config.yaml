@@ -1,0 +1,45 @@
+# contact_campaign:
+#   name: "John Smith"
+#   email: "john.smith@techsolutions.com"
+#   phone: "+1-555-0123"
+#   company: "Tech Solutions Inc"
+#   subject: "Business Partnership Inquiry"
+#   message: |
+#     Hello,
+    
+#     I am interested in learning more about your products/services. 
+#     Would you be available for a brief discussion about potential partnership opportunities?
+    
+#     Best regards,
+#     John Smith
+#     Tech Solutions Inc
+  
+#   # B2B specific fields
+#   country: "United States"
+#   items_needed: "Software solutions, consulting services"
+  
+#   websites:
+#     - "https://www.example-b2b-company.com"
+#     - "https://www.another-company.com/contact"
+#     - "https://www.techcorp.com/get-in-touch"
+#     - "https://www.industrial-supplier.com/request-quote"
+  
+#   outputFileDirectory: "output/contact_submissions"
+  
+#   # Rate limiting
+#   delay_between_submissions: 30
+#   max_submissions_per_hour: 20
+  
+#   # Form type specific settings
+#   form_types:
+#     contact_us:
+#       required_fields: ["name", "email", "subject"]
+#       optional_fields: ["phone", "message"]
+#     request_quote:
+#       required_fields: ["name", "email", "country"]
+#       optional_fields: ["phone", "company", "items_needed"]
+  
+#   # Compliance settings
+#   respect_robots_txt: true
+#   user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+#   max_retries: 3

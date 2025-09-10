@@ -1,0 +1,79 @@
+[
+  {
+    "website": "https://www.trane.com.br",
+    "success": false,
+    "form_type": "contact_us",
+    "submission_time": 1756974212.987245,
+    "contact_data": {},
+    "error": "No form fields could be filled",
+    "confirmation_message": null,
+    "required_fields_detected": [],
+    "filled_fields": []
+  },
+  {
+    "website": "https://www.trane.com.br",
+    "success": false,
+    "form_type": "contact_us",
+    "submission_time": 1756974394.774092,
+    "contact_data": {},
+    "error": "No form fields could be filled",
+    "confirmation_message": null,
+    "required_fields_detected": [],
+    "filled_fields": []
+  },
+  {
+    "website": "https://www.eagleburgmann.com.br",
+    "success": false,
+    "form_type": "contact_us",
+    "submission_time": 1756974433.821592,
+    "contact_data": {},
+    "error": "No form fields could be filled",
+    "confirmation_message": null,
+    "required_fields_detected": [],
+    "filled_fields": []
+  },
+  {
+    "website": "https://www.trane.com.br",
+    "success": false,
+    "form_type": "contact_us",
+    "submission_time": 1757017484.3239071,
+    "contact_data": {},
+    "error": "No form fields could be filled",
+    "confirmation_message": null,
+    "required_fields_detected": [],
+    "filled_fields": []
+  },
+  {
+    "website": "https://www.eagleburgmann.com.br",
+    "success": false,
+    "form_type": "unknown",
+    "submission_time": 1757017518.11823,
+    "contact_data": {},
+    "error": "No form fields could be filled",
+    "confirmation_message": null,
+    "required_fields_detected": [],
+    "filled_fields": []
+  },
+  {
+    "website": "https://www.trane.com.br",
+    "success": false,
+    "form_type": "contact_us",
+    "submission_time": 1757051899.532927,
+    "contact_data": {},
+    "error": "No form fields could be filled",
+    "confirmation_message": null,
+    "required_fields_detected": [],
+    "filled_fields": []
+  },
+  {
+    "website": "https://www.eagleburgmann.com.br",
+    "success": false,
+    "form_type": "unknown",
+    "submission_time": 1757051943.89831,
+    "contact_data": {},
+    "error": "No form fields could be filled",
+    "confirmation_message": null,
+    "required_fields_detected": [],
+    "filled_fields": []
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "contact_campaign": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "websites": { "type": "array", "items": { "type": "string", "format": "uri" } },
+        "job_types": { "type": "array", "items": { "type": "string", "enum": ["in_person", "hybrid", "remote"] } },
+        "llm_model_type": { "type": "string", "enum": ["openai", "claude"] }
+      },
+      "required": ["name", "email", "websites"]
+    }
+  },
+  "required": ["contact_campaign"]
+}

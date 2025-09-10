@@ -1,0 +1,22 @@
+[
+  {
+    "website": "https://www.boels.com/de-de/customer-service/contact",
+    "success": true,
+    "form_type": "contact_us",
+    "submission_time": 1757052700.510566,
+    "contact_data": {
+      "name": "John Smith",
+      "email": "john.smith@techsolutions.com",
+      "phone": "+1-555-0123",
+      "company": "Tech Solutions Inc",
+      "subject": "Business Partnership Inquiry",
+      "message": "Hello Boels Team,\n\nI\u2019m reaching out to explore partnership opportunities with Boels Rental. Your focus on flexible equipment rental (including on-invoice options), safety programs, and digital resources like the BIM-Bibliothek and Survey & Laser services signals a strong commitment to operational efficiency and data-driven projects.\n\nTech Solutions Inc specializes in software and consulting that help rental and construction-focused businesses optimize asset management, workflow automation, and safety/compliance\u2014areas I believe could complement Boels\u2019 offerings and enhance your customer experience.\n\nWould you be open to a brief 20-minute call to discuss potential collaboration, such as integrating digital tools to streamline rental processes, asset lifecycle data, or safety documentation?\n\nBest regards,\nJohn Smith\nTech Solutions Inc",
+      "country": "United States",
+      "items_needed": "Software solutions, consulting services"
+    },
+    "error": null,
+    "confirmation_message": "Found success indicator: 'success'",
+    "required_fields_detected": [],
+    "filled_fields": []
+  }
+]
