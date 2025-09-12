@@ -67,3 +67,5 @@ export default tseslint.config([
   },
 ])
 ```
+npm install -D autoprefixer
+npm install -D tailwindcss

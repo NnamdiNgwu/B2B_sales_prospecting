@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes, forwardRef } from 'react';
-import { cn } from '../../../utils/classNames';
+import { cn } from '@/utils/classNames';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';

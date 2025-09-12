@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Prospect, DashboardMetrics } from '../types/types';
+import type { Prospect, DashboardMetrics } from '@/types';
 
 export const useDashboardMetrics = (prospects: Prospect[]) => {
   const [metrics, setMetrics] = useState<DashboardMetrics>({

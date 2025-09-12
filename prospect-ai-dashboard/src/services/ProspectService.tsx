@@ -1,7 +1,7 @@
-import { Prospect, Campaign, FilterOptions } from '../types';
+import type { Prospect, Campaign, FilterOptions } from "@/types";
 
 class ProspectService {
-  private readonly baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+  private baseUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api';
 
   async getProspects(filters?: FilterOptions): Promise<Prospect[]> {
     try {

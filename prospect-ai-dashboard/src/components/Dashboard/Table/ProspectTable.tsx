@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { Prospect } from '../../../types/types';
-import { Card } from '../../UI/Card/Card';
-import { formatDate } from '../../../utils/utils';
-import { Button } from '../../UI/Button/Button';
+import type { Prospect } from '@/types';
+import { Card } from '@/components/UI/Card/Card';
+import { formatDate } from '@/utils/utils';
+import { Button } from '@/components/UI/Button/Button';
 
 type SortConfig = {
   key: keyof Prospect;

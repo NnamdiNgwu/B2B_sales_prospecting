@@ -1,6 +1,5 @@
-data_science_projects/B2B_sales_prospecting/ai_job_hunt/src/hooks/useProspects.ts
 import { useState, useEffect } from 'react';
-import { Prospect, FilterOptions } from '../types/types';
+import type { Prospect, FilterOptions } from '@/types';
 import { prospectService } from '../services/ProspectService';
 import { getErrorMessage } from './useErrorHandler';
 

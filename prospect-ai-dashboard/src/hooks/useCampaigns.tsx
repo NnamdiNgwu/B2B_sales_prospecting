@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Campaign } from '../types/types';
+import type { Campaign } from '@/types';
 import { prospectService } from '../services/ProspectService';
 import { getErrorMessage } from './useErrorHandler';
 

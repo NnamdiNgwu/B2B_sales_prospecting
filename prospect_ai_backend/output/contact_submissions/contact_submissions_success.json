@@ -18,5 +18,25 @@
     "confirmation_message": "Found success indicator: 'success'",
     "required_fields_detected": [],
     "filled_fields": []
+  },
+  {
+    "website": "https://www.palmcanopy.games",
+    "success": true,
+    "form_type": "contact_us",
+    "submission_time": 1757659672.647535,
+    "contact_data": {
+      "name": "John Smith",
+      "email": "john.smith@techsolutions.com",
+      "phone": "+1-555-0123",
+      "company": "Tech Solutions Inc",
+      "subject": "Business Partnership Inquiry",
+      "message": "Hello Palm Canopy Studios team,\n\nI\u2019m John Smith from Tech Solutions Inc, a Berlin-based firm. I\u2019ve been exploring The Ratio Effect and your DLC-driven approach to transforming empathy, resilience, and communication through gameplay. I\u2019d love to discuss how Tech Solutions can support Palm Canopy Studios with software and consulting services to amplify your reach, measure learning outcomes from your DLC, or streamline your development and distribution workflows.\n\nIf you\u2019re open to it, could we schedule a 20\u201330 minute call to explore potential partnership models\u2014co-market, technology integration, or collaborative content strategies?\n\nBest regards,\nJohn Smith\nTech Solutions Inc",
+      "country": "United States",
+      "items_needed": "Software solutions, consulting services"
+    },
+    "error": null,
+    "confirmation_message": "Found success indicator: 'success'",
+    "required_fields_detected": [],
+    "filled_fields": []
   }
 ]

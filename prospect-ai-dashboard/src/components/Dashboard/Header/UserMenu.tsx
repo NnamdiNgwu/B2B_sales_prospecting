@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button } from '../../UI/Button/Button';
+import { Button } from '@/components/UI/Button/Button';
 
 export const UserMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

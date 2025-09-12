@@ -240,6 +240,54 @@ class LLMLogger:
             raise
 
 
+class LLMManager:
+    """
+    Thin wrapper exposing a simple generate(prompt) API over the existing
+    AIAdapter + LoggerChatModel stack. Config and keys come from env by default.
+    """
+
+    def __init__(self, config: dict | None = None, api_key: str | None = None) -> None:
+        # Build config from env if not provided
+        if config is None:
+            config = {
+                "llm_model_type": os.getenv("LLM_MODEL_TYPE", "openai"),
+                "llm_model": os.getenv("LLM_MODEL", "gpt-4o-mini"),
+                "llm_api_url": os.getenv("LLM_API_URL", ""),  # for ollama
+            }
+
+        # Resolve API key per provider, unless explicitly passed in
+        if api_key is None:
+            provider = config.get("llm_model_type", "").lower()
+            key_env = {
+                "openai": "OPENAI_API_KEY",
+                "claude": "ANTHROPIC_API_KEY",
+                "gemini": "GOOGLE_API_KEY",
+                "huggingface": "HUGGINGFACEHUB_API_TOKEN",
+                "ollama": "",  # local models typically don't need a key
+            }.get(provider, "")
+            api_key = os.getenv(key_env, "")
+
+        # Reuse existing components
+        self._personalizer = B2BMessagePersonalizer(config, api_key)
+        self._adapter = self._personalizer.ai_adapter    # AIAdapter
+        self._llm = self._personalizer.llm               # LoggerChatModel
+
+    def generate(self, prompt: str, **kwargs) -> str:
+        """
+        Stateless text generation. kwargs are accepted for future extensibility.
+        """
+        try:
+            chat = ChatPromptTemplate.from_template("{input}")
+            chain = chat | self._llm | StrOutputParser()
+            return chain.invoke({"input": prompt})
+        except Exception as e:
+            logger.error(f"LLMManager.generate failed: {e}")
+            # graceful fallback
+            return prompt
+
+# Optional explicit export
+__all__ = ["LLMManager"]
+
 class LoggerChatModel:
 
     def __init__(self, llm: Union[OpenAIModel, OllamaModel, ClaudeModel, GeminiModel]):
@@ -356,7 +404,6 @@ class LoggerChatModel:
 class B2BMessagePersonalizer:
     """
     A focused class to personalize B2B contact messages using an LLM.
-    This replaces the job-hunting logic of the original GPTAnswerer.
     """
     def __init__(self, config, llm_api_key):
         self.ai_adapter = AIAdapter(config, llm_api_key)
@@ -403,6 +450,9 @@ class B2BMessagePersonalizer:
         except Exception as e:
             logger.error(f"Failed to generate personalized message: {e}")
             return original_message # Fallback to the original message on error
+
+
+
 
 
 # The original GPTAnswerer class is no longer needed for this workflow.

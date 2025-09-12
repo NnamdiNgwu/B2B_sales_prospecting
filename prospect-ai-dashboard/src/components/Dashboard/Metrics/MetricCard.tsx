@@ -1,11 +1,13 @@
 import React from 'react';
+import type { DashboardMetrics } from '@/types';
 import { Card } from '@/components/UI/Card/Card';
+// import { MetricCard } from './MetricCards';
 
 interface MetricCardProps {
   title: string;
   value: string;
   change: string;
-  changeType: 'positive' | 'negative';
+  changeType: 'increase' | 'decrease';
   icon: string;
 }
 

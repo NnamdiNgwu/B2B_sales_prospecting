@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTheme } from '../../../contexts/ThemeContext';
-import { Button } from '../../UI/Button/Button';
+import { useTheme } from '@/contexts/ThemeContext';
+import { Button } from '@/components/UI/Button/Button';
 import { ThemeToggle } from './ThemeToggle';
 import { UserMenu } from './UserMenu';
 import { Navigation } from './Navigation';

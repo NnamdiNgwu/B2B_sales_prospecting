@@ -143,7 +143,8 @@ This file maps field names found on website contact forms to the data used to fi
 2.  **Run the Bot:**
     Execute the main script to start your outreach campaign. The bot will use your configuration to find prospects, generate personalized messages, and contact them.
     ```bash
-    python run_contact_campaign.py
+    python3 run_contact_campaign.py contact_form_config.yaml
+
     ```
 
 3.  **Scrape-Only Mode:**
@@ -207,3 +208,189 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Disclaimer
 
 This tool is intended for educational and professional purposes only. The creator assumes no responsibility for any consequences arising from its use. Users are advised to comply with the terms of service of all relevant platforms and adhere to applicable laws and regulations (e.g., GDPR, CAN-SPAM). The use of automated tools may carry risks; proceed with caution and at your own discretion.
+
+
+
+
+flowchart LR
+  subgraph Client["Frontend (React + Vite)"]
+    UI[UI Components<br/>Dashboard, Pipeline, Filters]
+    SVC[ProspectService<br/>(fetch, mutate)]
+    STATE[Local State & Contexts<br/>ThemeContext, hooks]
+    UI <---> STATE
+    STATE <---> SVC
+  end
+
+  subgraph API["Backend API (FastAPI)"]
+    GW[HTTP API Gateway<br/>/api routes, Auth, RBAC]
+    RProspects[Prospects Router<br/>(GET/POST/PATCH)]
+    RCampaigns[Campaigns Router<br/>(GET)]
+    RAI[AI Router<br/>(generate/enrich)]
+    RAuth[Auth Router<br/>(JWT/OAuth)]
+    SVCBL[Service Layer<br/>business logic, validation]
+    REPO[Repository Layer<br/>ORM, queries]
+    GW --> RAuth
+    GW --> RProspects --> SVCBL --> REPO
+    GW --> RCampaigns --> SVCBL
+    GW --> RAI --> SVCBL --> Q
+  end
+
+  subgraph Data["Data Layer"]
+    PG[(PostgreSQL/Cloud DB<br/>prospects, campaigns, users)]
+    VEC[(Vector DB / pgvector / Pinecone<br/>embeddings, RAG)]
+    REDIS[(Redis<br/>cache, rate limits, tasks)]
+    OBJ[(Object Storage<br/>attachments, docs)]
+  end
+
+  subgraph Async["Workers & LLM Orchestration"]
+    Q[[Task Queue<br/>Redis/Celery/RQ]]
+    WRK[Worker(s)<br/>background jobs]
+    LLMOrch[LLM Orchestrator<br/>prompting, tools, retries, guardrails]
+    OBS[Observability<br/>logs, traces, metrics]
+    WRK -->|store/retrieve| VEC
+    WRK -->|read/write| PG
+    WRK -->|cache| REDIS
+    WRK -->|files| OBJ
+    WRK --> LLMOrch
+    LLMOrch -->|provider APIs| LLM[(Model Providers<br/>OpenAI/Anthropic/vLLM)]
+    WRK --> OBS
+  end
+
+  subgraph Ext["External Integrations"]
+    CRM[CRM (HubSpot/Salesforce)]
+    ENR[Enrichment (Clearbit, People Data)]
+    EMAIL[Email/Sending (SendGrid/SES)]
+    CAL[Calendar/Meet]
+  end
+
+  Client -->|REST/JSON, SSE/WS| API
+  API -->|ORM| PG
+  API -->|cache| REDIS
+  API -->|enqueue jobs| Q
+  WRK --> CRM
+  WRK --> ENR
+  WRK --> EMAIL
+  WRK --> CAL
+
+
+High-level component architecture
+
+Frontend (prospect-ai-dashboard)
+React + Vite + Tailwind
+Calls FastAPI /api (via Vite proxy in dev, env-configured base URL in prod)
+API Layer (FastAPI, “Blueprint”-style via APIRouter)
+Routers: /api/prospects, /api/campaigns, /api/automation, /api/llm, /api/health
+App factory create_app(), include_router(), CORS
+Services Layer
+ProspectService, CampaignService (DB or mocks)
+AutomationService (wraps contact_form_manager, contact_form_automator, captcha_handler)
+LLMService (wraps llm/llm_manager.py)
+MCPClient (Model Context Protocol client to external MCP servers/tools)
+Jobs/Workers
+MVP: FastAPI BackgroundTasks
+Scale: Celery/RQ + Redis for long-running contact-form campaigns; job status endpoints
+Data Layer
+MVP: in-memory/mocks
+Scale: Postgres + SQLAlchemy/Pydantic models
+Observability
+Structured logging, request IDs, metrics
+External Integrations
+Websites/contact forms (automation)
+Email/CRM/SERP/enrichment via MCP servers
+LLM provider(s) via llm_manager
+
+ASCII diagram
+
+prospect-ai-dashboard -> HTTP (Vite proxy or direct) -> FastAPI (/api) -> Routers (prospects | campaigns | automation | llm | health) -> Services: - Prospect/Campaign Service -> DB (future) or mocks - Automation Service -> contact_form_manager + captcha_handler - LLM Service -> llm_manager - MCP Client -> MCP Servers (enrichment/search/CRM/email tools) -> Jobs (BackgroundTasks/Celery) -> External sites/APIs -> Logging/Metrics
+
+
+
+prospect-ai-dashboard/
+├─ index.html
+├─ package.json
+├─ vite.config.ts
+├─ tailwind.config.js
+├─ postcss.config.(js|cjs)
+├─ tsconfig.json
+└─ src/
+   ├─ main.tsx
+   ├─ App.tsx
+   ├─ styles/
+   │  └─ index.css
+   ├─ contexts/
+   │  └─ ThemeContext.tsx
+   ├─ components/
+   │  ├─ Dashboard/
+   │  │  ├─ Header/
+   │  │  │  ├─ ThemeToggle.tsx
+   │  │  │  └─ UserMenu.tsx
+   │  │  ├─ Pipeline/
+   │  │  │  └─ ProspectPipeline.tsx
+   │  │  └─ Filters/
+   │  │     ├─ FilterPanel.tsx
+   │  │     ├─ SearchFilter.tsx
+   │  │     ├─ CheckboxFilter.tsx
+   │  │     └─ RangeFilter.tsx
+   │  └─ UI/
+   │     ├─ Button/Button.tsx
+   │     ├─ Card/Card.tsx
+   │     ├─ LoadingSpinner/LoadingSpinner.tsx
+   │     └─ ErrorMessage/ErrorMessage.tsx
+   ├─ hooks/
+   │  ├─ useProspects.ts
+   │  ├─ useCampaigns.tsx
+   │  └─ useDashboardMetrics.ts
+   ├─ services/
+   │  └─ ProspectService.tsx
+   ├─ types/
+   │  └─ index.ts
+   ├─ constants/
+   │  └─ dashboard.ts
+   └─ utils/
+      └─ utils.ts
+
+
+prospect_ai_backend/
+├─ requirements.txt
+├─ run_contact_campaign.py
+└─ src/
+   ├─ captcha_handler.py
+   ├─ contact_form_automator.py
+   ├─ contact_form_bot_facade.py
+   ├─ contact_form_manager.py
+   ├─ strings.py
+   ├─ utils.py
+   ├─ llm/
+   │  └─ llm_manager.py
+   └─ api/  (FastAPI “Blueprint”-style; planned scaffold)
+      ├─ main.py
+      ├─ routers/
+      │  ├─ health.py
+      │  ├─ prospects.py
+      │  ├─ campaigns.py
+      │  ├─ automation.py
+      │  └─ llm.py
+      ├─ schemas/
+      │  ├─ prospect.py
+      │  ├─ campaign.py
+      │  ├─ automation.py
+      │  └─ llm.py
+      └─ services/
+         ├─ prospect_service.py
+         ├─ campaign_service.py
+         ├─ automation_service.py
+         ├─ llm_service.py
+         └─ mcp_client.py
+
+
+
+# Safer when using a src/ layout
+python -m uvicorn --app-dir src api.main:app --reload --port 8000
+
+# Or if importing via src. prefix works in your cwd
+python -m uvicorn src.api.main:app --reload --port 8000
+
+python -m pytest -q
+
+curl -s http://127.0.0.1:8000/api/health
+curl -s -X POST http://127.0.0.1:8000/api/llm/generate -H 'content-type: application/json' -d

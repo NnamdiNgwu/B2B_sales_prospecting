@@ -75,5 +75,16 @@
     "confirmation_message": null,
     "required_fields_detected": [],
     "filled_fields": []
+  },
+  {
+    "website": "https://www.bo",
+    "success": false,
+    "form_type": "general_inquiry",
+    "submission_time": 1757659411.184648,
+    "contact_data": {},
+    "error": "No contact form found",
+    "confirmation_message": null,
+    "required_fields_detected": [],
+    "filled_fields": []
   }
 ]

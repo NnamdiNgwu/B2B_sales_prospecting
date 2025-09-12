@@ -1,4 +1,3 @@
-//B2B_sales_prospecting/ai_job_hunt/src/hooks/useErrorHandler.ts
 import { useState } from 'react';
 
 // export const useErrorHandler = () => {

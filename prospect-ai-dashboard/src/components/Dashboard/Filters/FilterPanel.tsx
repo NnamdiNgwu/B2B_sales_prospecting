@@ -1,11 +1,11 @@
 import React from 'react';
-import { FilterOptions, Prospect } from '../../../types';
-import { Card } from '../../UI/Card/Card';
-import { Button } from '../../UI/Button/Button';
+import type { FilterOptions, Prospect } from '@/types';
+import { Card } from '@/components/UI/Card/Card';
+import { Button } from '@/components/UI/Button/Button';
 import { SearchFilter } from './SearchFilter';
 import { CheckboxFilter } from './CheckboxFilter';
 import { RangeFilter } from './RangeFilter';
-import { INDUSTRIES, COMPANY_SIZES } from '../../../constants/dashboard';
+import { INDUSTRIES, COMPANY_SIZES } from '@/constants/dashboard';
 
 interface FilterPanelProps {
   filters: FilterOptions;

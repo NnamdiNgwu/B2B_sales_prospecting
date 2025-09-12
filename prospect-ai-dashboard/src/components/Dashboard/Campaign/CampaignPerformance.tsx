@@ -1,9 +1,9 @@
 import React from 'react';
-import { useCampaigns } from '../../../hooks/useCampaigns';
-import { Card } from '../../UI/Card/Card';
-import { LoadingSpinner } from '../../UI/LoadingSpinner/LoadingSpinner';
-import { ErrorMessage } from '../../UI/ErrorMessage/ErrorMessage';
-import { formatDate } from '../../../utils/utils';
+import { useCampaigns } from '@/hooks/useCampaigns';
+import { Card } from '@/components/UI/Card/Card';
+import { LoadingSpinner } from '@/components/UI/LoadingSpinner/LoadingSpinner';
+import { ErrorMessage } from '@/components/UI/ErrorMessage/ErrorMessage';
+import { formatDate } from '@/utils/utils';
 
 export const CampaignPerformance: React.FC = () => {
   const { campaigns, loading, error } = useCampaigns();

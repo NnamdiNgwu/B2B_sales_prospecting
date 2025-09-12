@@ -1,6 +1,6 @@
 import React from 'react';
-import { DashboardMetrics } from '../../../types';
-import { Card } from '../../UI/Card/Card';
+import type { DashboardMetrics } from '@/types';
+import { Card } from '@/components/UI/Card/Card';
 import { MetricCard } from './MetricCard';
 
 interface MetricsCardsProps {

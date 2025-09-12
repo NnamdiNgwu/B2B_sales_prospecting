@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, forwardRef } from 'react';
-import { cn } from '../../../utils/classNames';
+import { cn } from "@/utils/classNames";
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'elevated' | 'outline';

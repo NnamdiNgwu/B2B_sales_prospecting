@@ -5,13 +5,13 @@ import { ProspectPipeline } from './Pipeline/ProspectPipeline';
 import { ProspectTable } from './Table/ProspectTable';
 import { FilterPanel } from './Filters/FilterPanel';
 import { CampaignPerformance } from './Campaign/CampaignPerformance';
-import { useProspects } from '../../hooks/useProspects';
-import { useCampaigns } from '../../hooks/useCampaigns';
-import { useDashboardMetrics } from '../../hooks/useDashboardMetrics';
-import { Button } from '../UI/Button/Button';
-import { Card } from '../UI/Card/Card';
-import { LoadingSpinner } from '../UI/LoadingSpinner/LoadingSpinner';
-import { ErrorMessage } from '../UI/ErrorMessage/ErrorMessage';
+import { useProspects } from '@/hooks/useProspects';
+import { useCampaigns } from '@/hooks/useCampaigns';
+import { useDashboardMetrics } from '@/hooks/useDashboardMetrics';
+import { Button } from '@/components/UI/Button/Button';
+import { Card } from '@/components/UI/Card/Card';
+import { LoadingSpinner } from '@/components/UI/LoadingSpinner/LoadingSpinner';
+import { ErrorMessage } from '@/components/UI/ErrorMessage/ErrorMessage';
 
 export const Dashboard: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);

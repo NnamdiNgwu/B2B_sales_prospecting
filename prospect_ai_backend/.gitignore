@@ -31,6 +31,7 @@ build
 assets
 assets/*
 assets/resume_schema.yaml
-tests
-main.py
+tests1
 pytest.ini
+tests
+src/api/services/mcp_client.py
