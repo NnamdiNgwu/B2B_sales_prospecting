@@ -33,60 +33,45 @@
 
 from typing import Any, Dict
 from loguru import logger
-
-# Prefer absolute import (src layout)
 from src.llm.llm_manager import LLMManager
 
 class LLMService:
     def __init__(self) -> None:
-        # LLMManager loads provider/model from env/.env
         self._mgr = LLMManager()
 
     def generate(self, prompt: str, **params: Dict[str, Any]) -> str:
         """
-        Generate text using the configured LLM.
-
-        Params supported (best-effort; some providers may ignore):
-          - system: str (system prompt)
-          - temperature: float
-          - max_tokens: int (hinted via system prompt to keep replies short)
+        Generic text generation. Do not inject a default system prompt here.
+        Let llm_manager/B2BMessagePersonalizer own personalization instructions.
         """
         try:
-            system_msg = params.get(
-                "system",
-                "You are a concise assistant. Respond in one short sentence unless otherwise requested.",
-            )
-
-            # Try to use a direct generate() if the manager exposes it.
-            if hasattr(self._mgr, "generate") and callable(getattr(self._mgr, "generate")):
+            # Primary: use manager’s own generate (single source of truth)
+            try:
                 text = self._mgr.generate(prompt=prompt, **params)  # type: ignore[attr-defined]
                 return self._postprocess(text, params)
-
-            # Fallback: call the manager like a chat model with messages
-            try:
-                from langchain_core.messages import HumanMessage, SystemMessage
-            except Exception:
-                # Older langchain
-                from langchain.schema import HumanMessage, SystemMessage  # type: ignore
-
-            messages = [SystemMessage(content=system_msg), HumanMessage(content=prompt)]
-
-            # LLMManager.__call__(messages) returns either a dict-like or object with .content
-            res = self._mgr(messages)  # type: ignore[call-arg]
-            if isinstance(res, dict) and "content" in res:
-                text = str(res.get("content", ""))
-            elif hasattr(res, "content"):
-                text = str(getattr(res, "content"))
-            else:
-                text = str(res)
-
-            return self._postprocess(text, params)
+            except AttributeError:
+                # Fallback: call LLM as chat; include system only if provided
+                try:
+                    from langchain_core.messages import HumanMessage, SystemMessage
+                except Exception:
+                    from langchain.schema import HumanMessage, SystemMessage  # type: ignore
+                messages = []
+                if isinstance(params.get("system"), str) and params["system"].strip():
+                    messages.append(SystemMessage(content=params["system"]))
+                messages.append(HumanMessage(content=prompt))
+                res = self._mgr(messages)  # type: ignore[call-arg]
+                if isinstance(res, dict) and "content" in res:
+                    text = str(res.get("content", ""))
+                elif hasattr(res, "content"):
+                    text = str(getattr(res, "content"))
+                else:
+                    text = str(res)
+                return self._postprocess(text, params)
         except Exception as e:
             logger.error(f"LLMService.generate failed: {e}")
             return ""
 
     def _postprocess(self, text: str, params: Dict[str, Any]) -> str:
-        # Soft cap length if caller asked for terseness
         max_chars = params.get("max_chars")
         if isinstance(max_chars, int) and max_chars > 0 and len(text) > max_chars:
             return text[:max_chars].rstrip()

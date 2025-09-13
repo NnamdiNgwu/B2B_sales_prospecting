@@ -1,65 +1,44 @@
-import type { Prospect, Campaign, FilterOptions } from "@/types";
+// // projects/B2B_sales_prospecting/prospect-ai-dashboard/src/services/ProspectService.tsx
+import { http } from '@/services/api';
+import type { Prospect, Campaign } from '@/types';
+
+export type FilterOptions = {
+  search?: string
+  industry?: string[]
+  status?: string[]
+  companySize?: string[]
+  location?: string[]
+  tags?: string[]
+  leadScore?: [number, number]
+}
 
 class ProspectService {
-  private baseUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api';
-
   async getProspects(filters?: FilterOptions): Promise<Prospect[]> {
-    try {
-      const queryParams = new URLSearchParams();
-      
-      if (filters) {
-        if (filters.search) queryParams.append('search', filters.search);
-        if (filters.industry.length) queryParams.append('industry', filters.industry.join(','));
-        if (filters.status.length) queryParams.append('status', filters.status.join(','));
-        // Add other filters...
-      }
-
-      const response = await fetch(`${this.baseUrl}/prospects?${queryParams}`);
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch prospects: ${response.statusText}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching prospects:', error);
-      throw error;
+    const q: Record<string, string> = {}
+    if (filters?.search) q.search = filters.search
+    if (filters?.industry?.length) q.industry = filters.industry.join(',')
+    if (filters?.status?.length) q.status = filters.status.join(',')
+    if (filters?.companySize?.length) q.companySize = filters.companySize.join(',')
+    if (filters?.location?.length) q.location = filters.location.join(',')
+    if (filters?.tags?.length) q.tags = filters.tags.join(',')
+    if (Array.isArray(filters?.leadScore) && filters!.leadScore!.length === 2) {
+      q.leadScoreMin = String(filters!.leadScore![0])
+      q.leadScoreMax = String(filters!.leadScore![1])
     }
+    return http<Prospect[]>('/prospects', { query: q })
   }
 
   async getCampaigns(): Promise<Campaign[]> {
-    try {
-      const response = await fetch(`${this.baseUrl}/campaigns`);
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch campaigns: ${response.statusText}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching campaigns:', error);
-      throw error;
-    }
+    return http<Campaign[]>('/campaigns')
   }
 
   async updateProspectStatus(prospectId: string, status: string): Promise<void> {
-    try {
-      const response = await fetch(`${this.baseUrl}/prospects/${prospectId}/status`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to update prospect status: ${response.statusText}`);
-      }
-    } catch (error) {
-      console.error('Error updating prospect status:', error);
-      throw error;
-    }
+    await http<void>(`/prospects/${prospectId}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status }),
+    })
   }
 }
 
-export const prospectService = new ProspectService();
+export const prospectService = new ProspectService()
+export type { Prospect, Campaign} 

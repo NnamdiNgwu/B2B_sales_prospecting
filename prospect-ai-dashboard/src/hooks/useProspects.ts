@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import type { Prospect, FilterOptions } from '@/types';
-import { prospectService } from '../services/ProspectService';
-import { getErrorMessage } from './useErrorHandler';
+import { useEffect, useState } from 'react'
+import type { Prospect } from '@/types'
+import { prospectService, type FilterOptions } from '@/services/ProspectService'
 
 const initialFilters: FilterOptions = {
   search: '',
@@ -11,101 +10,45 @@ const initialFilters: FilterOptions = {
   status: [],
   location: [],
   tags: [],
-};
+}
 
 export const useProspects = () => {
-  const [prospects, setProspects] = useState<Prospect[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [filters, setFilters] = useState<FilterOptions>(initialFilters);
+  const [prospects, setProspects] = useState<Prospect[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [filters, setFilters] = useState<FilterOptions>(initialFilters)
 
   useEffect(() => {
-    const fetchProspects = async () => {
+    let active = true
+    const load = async () => {
       try {
-        setLoading(true);
-        setError(null);
-        const data = await prospectService.getProspects(filters);
-        setProspects(data);
-      } catch (err) {
-        setError(getErrorMessage(err));
+        setLoading(true)
+        setError(null)
+        const data = await prospectService.getProspects(filters)
+        if (active) setProspects(data || [])
+      } catch (e: any) {
+        if (active) setError(e?.message || 'Failed to load prospects')
       } finally {
-        setLoading(false);
+        if (active) setLoading(false)
       }
-    };
+    }
+    load()
+    return () => {
+      active = false
+    }
+  }, [
+    filters.search,
+    filters.leadScore?.[0],
+    filters.leadScore?.[1],
+    JSON.stringify(filters.industry),
+    JSON.stringify(filters.status),
+    JSON.stringify(filters.companySize),
+    JSON.stringify(filters.location),
+    JSON.stringify(filters.tags),
+  ])
 
-    fetchProspects();
-  }, [filters]);
+  const updateFilters = (next: Partial<FilterOptions>) =>
+    setFilters((prev) => ({ ...prev, ...next }))
 
-  const updateFilters = (newFilters: Partial<FilterOptions>) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
-  };
-
-  return { prospects, loading, error, filters, updateFilters };
-};
-
-
-
-// import { useState, useEffect, useCallback } from 'react';
-// import { Prospect, FilterOptions } from '../types';
-// import { prospectService } from '../services/prospectService';
-// import { getErrorMessage } from './useErrorHandler';
-
-// interface UseProspectsReturn {
-//   prospects: Prospect[];
-//   loading: boolean;
-//   error: string | null;
-//   filters: FilterOptions;
-//   updateFilters: (newFilters: Partial<FilterOptions>) => void;
-//   refetch: () => Promise<void>;
-// }
-
-// const initialFilters: FilterOptions = {
-//   search: '',
-//   industry: [],
-//   companySize: [],
-//   leadScore: [0, 100],
-//   status: [],
-//   location: [],
-//   tags: []
-// };
-
-// export const useProspects = (): UseProspectsReturn => {
-//   const [prospects, setProspects] = useState<Prospect[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-//   const [filters, setFilters] = useState<FilterOptions>(initialFilters);
-
-//   const fetchProspects = useCallback(async (currentFilters: FilterOptions) => {
-//     try {
-//       setLoading(true);
-//       setError(null);
-//       const data = await prospectService.getProspects(currentFilters);
-//       setProspects(data);
-//     } catch (err) {
-//       setError(getErrorMessage(err));
-//     } finally {
-//       setLoading(false);
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     fetchProspects(filters);
-//   }, [filters, fetchProspects]);
-
-//   const updateFilters = useCallback((newFilters: Partial<FilterOptions>) => {
-//     setFilters(prevFilters => ({ ...prevFilters, ...newFilters }));
-//   }, []);
-
-//   const refetch = useCallback(() => fetchProspects(filters), [filters, fetchProspects]);
-
-//   return {
-//     prospects,
-//     loading,
-//     error,
-//     filters,
-//     updateFilters,
-//     refetch
-//   };
-// };
-
-
+  return { prospects, loading, error, filters, updateFilters }
+}

@@ -4,9 +4,9 @@ import { MetricsCards } from './Metrics/MetricsCards';
 import { ProspectPipeline } from './Pipeline/ProspectPipeline';
 import { ProspectTable } from './Table/ProspectTable';
 import { FilterPanel } from './Filters/FilterPanel';
-import { CampaignPerformance } from './Campaign/CampaignPerformance';
+import CampaignPerformance  from './Campaign/CampaignPerformance';
 import { useProspects } from '@/hooks/useProspects';
-import { useCampaigns } from '@/hooks/useCampaigns';
+// import { useCampaigns } from '@/hooks/useCampaigns';
 import { useDashboardMetrics } from '@/hooks/useDashboardMetrics';
 import { Button } from '@/components/UI/Button/Button';
 import { Card } from '@/components/UI/Card/Card';
@@ -25,10 +25,10 @@ export const Dashboard: React.FC = () => {
     updateFilters 
   } = useProspects();
   
-  const { campaigns, loading: campaignsLoading } = useCampaigns();
+  // const { campaigns, loading: campaignsLoading } = useCampaigns();
   const { metrics, loading: metricsLoading } = useDashboardMetrics(prospects);
 
-  const isLoading = prospectsLoading || campaignsLoading || metricsLoading;
+  const isLoading = prospectsLoading || metricsLoading;
 
   if (isLoading && !prospectsError) {
     return (
@@ -63,7 +63,8 @@ export const Dashboard: React.FC = () => {
         <MetricsCards metrics={metrics} />
         
         <div className="mb-8">
-          <CampaignPerformance campaigns={campaigns || []} />
+          {/* Component fetches campaigns internally */}
+          <CampaignPerformance />
         </div>
 
         <Card padding="none">

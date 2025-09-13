@@ -14,13 +14,21 @@ export const formatPercentage = (num: number, decimals: number = 1): string => {
   return `${num.toFixed(decimals)}%`;
 };
 
-export const formatDate = (date: string | Date): string => {
-  return new Intl.DateTimeFormat('en-US', {
+export function formatDate(
+  input?: string | number | Date | null,
+  options?: Intl.DateTimeFormatOptions
+): string {
+  if (!input) return '—'
+  const date = input instanceof Date ? input : new Date(input)
+  if (isNaN(date.getTime())) return '—'
+  const fmt = new Intl.DateTimeFormat(undefined, {
     year: 'numeric',
     month: 'short',
-    day: 'numeric'
-  }).format(new Date(date));
-};
+    day: '2-digit',
+    ...options,
+  })
+  return fmt.format(date)
+}
 
 export const formatRelativeTime = (date: string | Date): string => {
   const now = new Date();

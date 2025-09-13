@@ -410,7 +410,7 @@ class B2BMessagePersonalizer:
         self.llm = LoggerChatModel(self.ai_adapter)
         self.personalization_template = self._preprocess_template_string(
             """
-            You are a B2B sales assistant. Your task is to personalize a generic outreach message based on the content of a company's website.
+            You are a B2B sales assistant. Your task is to personalize a concise generic outreach message based on the content of a company's website.
             
             Analyze the provided "Website Content" to understand the company's industry, products, and services.
             

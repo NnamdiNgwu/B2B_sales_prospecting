@@ -1,29 +1,31 @@
-import { useState, useEffect } from 'react';
-import type { Campaign } from '@/types';
-import { prospectService } from '../services/ProspectService';
-import { getErrorMessage } from './useErrorHandler';
+import { useEffect, useState } from 'react'
+import type { Campaign } from '@/types'
+import { http } from '@/services/api'
 
-export const useCampaigns = () => {
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export function useCampaigns() {
+  const [data, setData] = useState<Campaign[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const fetchCampaigns = async () => {
+    let active = true
+    const load = async () => {
       try {
-        setLoading(true);
-        setError(null);
-        const data = await prospectService.getCampaigns();
-        setCampaigns(data);
-      } catch (err) {
-        setError(getErrorMessage(err));
+        setLoading(true)
+        setError(null)
+        const rows = await http<Campaign[]>('/campaigns')
+        if (active) setData(rows || [])
+      } catch (e: any) {
+        if (active) setError(e?.message || 'Failed to load campaigns')
       } finally {
-        setLoading(false);
+        if (active) setLoading(false)
       }
-    };
+    }
+    load()
+    return () => {
+      active = false
+    }
+  }, [])
 
-    fetchCampaigns();
-  }, []);
-
-  return { campaigns, loading, error };
-};
+  return { data, loading, error }
+}

@@ -83,7 +83,10 @@ export const ProspectTable: React.FC<{ prospects: Prospect[] }> = ({ prospects }
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{prospect.leadScore}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{formatDate(prospect.lastActivity)}</td>
+                <td className="whitespace-nowrap px-4 py-2 text-sm text-gray-700">
+                  {formatDate(prospect.lastContactDate)}
+                </td>
+                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{formatDate(prospect.lastActivity)}</td> */}
               </tr>
             ))}
           </tbody>
