@@ -1,0 +1,93 @@
+Component,Prop,Type,Values,Default,Required,Description,Accessibility Notes,MapsTo
+Button,variant,enum,"primary|secondary|outline|ghost|danger",primary,false,"Visual style variant.","Focus ring visible; sufficient contrast.","src/components/UI/Button/Button.tsx"
+Button,size,enum,"sm|md|lg",md,false,"Control padding and font size.","Touch target ≥ 40px on mobile.","src/components/UI/Button/Button.tsx"
+Button,isLoading,boolean,"true|false",false,false,"Shows spinner and disables click.","Set aria-busy=true.","src/components/UI/Button/Button.tsx"
+Button,leftIcon,node,"ReactNode","",false,"Optional leading icon.","Icon marked aria-hidden=true.","src/components/UI/Button/Button.tsx"
+Button,rightIcon,node,"ReactNode","",false,"Optional trailing icon.","Icon marked aria-hidden=true.","src/components/UI/Button/Button.tsx"
+Button,disabled,boolean,"true|false",false,false,"Disable interactions.","Maintain contrast in disabled state.","src/components/UI/Button/Button.tsx"
+
+Input,label,string,"text","",false,"Visible label text.","Associate with input via htmlFor/id.","src/components/UI/Input/Input.tsx"
+Input,helperText,string,"text","",false,"Supportive guidance below field.","Link via aria-describedby.","src/components/UI/Input/Input.tsx"
+Input,error,string,"text","",false,"Error message below field.","Link via aria-describedby; role=alert if dynamic.","src/components/UI/Input/Input.tsx"
+Input,leftIcon,node,"ReactNode","",false,"Icon on left.","aria-hidden=true; not the only indicator.","src/components/UI/Input/Input.tsx"
+Input,rightIcon,node,"ReactNode","",false,"Icon on right.","aria-hidden=true.","src/components/UI/Input/Input.tsx"
+Input,placeholder,string,"text","",false,"Placeholder copy.","Do not replace label with placeholder.","src/components/UI/Input/Input.tsx"
+Input,disabled,boolean,"true|false",false,false,"Disable input.","Preserve label readability.","src/components/UI/Input/Input.tsx"
+
+Select,label,string,"text","",false,"Visible label.","Label linked to control.","(New)"
+Select,options,array,"[{label,value}]","",true,"Items to pick from.","Announce changes with onChange.","(New)"
+Select,multi,boolean,"true|false",false,false,"Enable multi-select.","Keyboard selection supported.","(New)"
+Select,placeholder,string,"text","Select...",false,"Placeholder when empty.","N/A","(New)"
+Select,disabled,boolean,"true|false",false,false,"Disable control.","N/A","(New)"
+
+RangeSlider,min,number,"0..∞",0,true,"Lower bound.","aria-valuemin.","(New)"
+RangeSlider,max,number,"0..∞",100,true,"Upper bound.","aria-valuemax.","(New)"
+RangeSlider,value,array,"[number,number]","[0,100]",true,"Selected range.","Use two thumbs with aria labels.","(New)"
+RangeSlider,onChange,function,"(value)=>void","",true,"Change handler.","Keyboard step with arrows.","(New)"
+
+Badge,variant,enum,"neutral|success|warning|danger|info",neutral,false,"Visual tag style.","Don’t use color alone for meaning.","(New)"
+Badge,size,enum,"sm|md",sm,false,"Badge size.","N/A","(New)"
+Badge,pill,boolean,"true|false",false,false,"Rounded style.","N/A","(New)"
+
+Card,variant,enum,"default|elevated|outline",default,false,"Card style variant.","Semantic grouping; headings present.","src/components/UI/Card/Card.tsx"
+Card,padding,enum,"none|sm|md|lg",md,false,"Internal spacing.","Maintain readable density.","src/components/UI/Card/Card.tsx"
+
+Table,columns,array,"[{key,header,width,align}]",,true,"Column model.","Headers use scope=col.","(New)"
+Table,data,array,"Record[]",,true,"Row data.","Row focus ring; keyboard nav.","(New)"
+Table,rowKey,string,"key field","id",false,"Unique row id.","N/A","(New)"
+Table,selectable,boolean,"true|false",false,false,"Show checkboxes & bulk ops.","Checkboxes labeled; select all.","(New)"
+Table,pagination,object,"{page,pageSize,total}",,false,"Paging model.","aria-current on active page.","(New)"
+Table,emptyState,node,"ReactNode","",false,"Shown when no rows.","Include actionable help.","(New)"
+
+Modal,title,string,"text","",true,"Dialog title.","role=dialog; aria-modal=true; focus trap.","(New)"
+Modal,isOpen,boolean,"true|false",false,true,"Visibility flag.","Return focus on close.","(New)"
+Modal,onClose,function,"()=>void","",true,"Close handler.","Escape to close; close button labeled.","(New)"
+Modal,size,enum,"sm|md|lg",md,false,"Dialog width.","Responsive at breakpoints.","(New)"
+
+Toast,variant,enum,"success|info|warning|error",info,false,"Toast style.","role=status; not solely color-coded.","(New)"
+Toast,duration,number,"ms",4000,false,"Auto-dismiss time.","Allow manual close.","(New)"
+Toast,message,string,"text","",true,"Toast content.","Concise, clear text.","(New)"
+
+Tabs,items,array,"[{id,label}]",,true,"Tab list items.","role=tablist; arrow keys navigate.","(New)"
+Tabs,value,string,"tab id","",true,"Active tab id.","aria-selected on active.","(New)"
+Tabs,onChange,function,"(id)=>void","",true,"Set active tab.","Focus moves to tabpanel.","(New)"
+
+Pagination,page,number,"1..N",1,true,"Current page.","aria-current on active.","(New)"
+Pagination,total,number,"0..∞",0,true,"Total items.","Announce page changes.","(New)"
+Pagination,pageSize,number,"5|10|20|50|100",20,false,"Items per page.","Expose via select with label.","(New)"
+Pagination,onChange,function,"({page,pageSize})=>void","",true,"Handler for changes.","N/A","(New)"
+
+KPI Card,label,string,"text","",true,"Metric label.","Readable text, not just icon.","(New)"
+KPI Card,value,string|number,"text/number","",true,"Metric value.","N/A","(New)"
+KPI Card,delta,string,"+/-%",,false,"Change vs period.","Include direction icon + text.","(New)"
+KPI Card,icon,node,"ReactNode","",false,"Icon slot.","aria-hidden=true.","(New)"
+
+ChartContainer,type,enum,"line|bar|funnel","line",true,"Chart type.","Provide text alt/summary.","(New)"
+ChartContainer,data,array,"Series[]","",true,"Chart data.","Color-not-only; labels present.","(New)"
+ChartContainer,loading,boolean,"true|false",false,false,"Skeleton state.","N/A","(New)"
+
+PipelineColumn,stage,object,"{key,label,color,count}","",true,"Stage metadata.","Readable label with count.","src/components/Dashboard/Pipeline/ProspectPipeline.tsx"
+PipelineColumn,prospects,array,"Prospect[]","",true,"Items in stage.","Keyboard access to items.","src/components/Dashboard/Pipeline/ProspectPipeline.tsx"
+
+ProspectCard,prospect,object,"Prospect","",true,"Prospect summary view.","Buttons have discernible names.","(New)"
+ProspectCard,stageColor,string,"CSS color","",false,"Stage accent color.","Color not sole indicator.","(New)"
+
+FilterPanel,filters,object,"FilterOptions","",true,"Current filter values.","Controls labeled; clear all.","src/components/Dashboard/Filters/FilterPanel.tsx"
+FilterPanel,onFiltersChange,function,"(f)=>void","",true,"Callback for filter changes.","Announce updates to table.","src/components/Dashboard/Filters/FilterPanel.tsx"
+FilterPanel,prospects,array,"Prospect[]","",false,"For dynamic filter options.","N/A","src/components/Dashboard/Filters/FilterPanel.tsx"
+
+EvidenceModal,isOpen,boolean,"true|false",false,true,"Visibility flag.","role=dialog; focus trap.","(New)"
+EvidenceModal,itemId,string,"uuid","",true,"Target interaction id.","Tabs labeled with role=tab.","(New)"
+EvidenceModal,tabs,array,"['Email','Form','Screenshots','Headers','Model','Robots']","",true,"Which artifacts to show.","Each tab has alt text/captions.","(New)"
+
+LoadingSpinner,size,enum,"sm|md|lg","md",false,"Spinner size.","aria-hidden=true; pair with aria-busy parent.","(New)
+ErrorMessage,title,string,"text","",true,"Short error headline.","role=alert.","(New)"
+ErrorMessage,message,string,"text","",true,"Detailed message.","Link to retry/learn more.","(New)"
+EmptyState,icon,node,"ReactNode","",false,"Illustrative icon.","Decorative; aria-hidden=true.","(New)"
+EmptyState,title,string,"text","",true,"Primary message.","Concise, action-oriented.","(New)"
+EmptyState,action,node,"Button","",false,"Primary CTA.","Button labeled clearly.","(New)"
+
+Tooltip,content,string,"text","",true,"Tooltip text.","Keyboard accessible; delay 300–500ms.","(New)"
+Tooltip,placement,enum,"top|right|bottom|left","top",false,"Positioning.","Do not hide critical info.","(New)"
+
+ThemeToggle,onToggle,function,"()=>void","",true,"Switch light/dark theme.","Has aria-label='Toggle theme'.","src/contexts/ThemeContext.tsx"

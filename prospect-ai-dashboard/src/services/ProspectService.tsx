@@ -1,4 +1,4 @@
-// // projects/B2B_sales_prospecting/prospect-ai-dashboard/src/services/ProspectService.tsx
+//ospect-ai-dashboard/src/services/ProspectService.tsx
 import { http } from '@/services/api';
 import type { Prospect, Campaign } from '@/types';
 

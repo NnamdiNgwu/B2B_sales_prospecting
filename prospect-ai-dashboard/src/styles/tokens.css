@@ -1,0 +1,69 @@
+:root {
+  /* Backgrounds */
+  --bg-canvas: #f9fafb; /* gray-50 */
+  --bg-card:   #ffffff;
+
+  /* Text */
+  --text-primary: #0f172a; /* slate-900 */
+  --text-muted:   #6b7280; /* gray-500 */
+
+  /* Accent */
+  --accent:        #2563eb; /* blue-600 */
+  --accent-hover:  #1d4ed8; /* blue-700 */
+
+  /* Semantic states */
+  --state-success: #16a34a; /* green-600 */
+  --state-warning: #d97706; /* amber-600 */
+  --state-danger:  #dc2626; /* red-600 */
+  --state-info:    #0ea5e9; /* sky-500 */
+
+  /* Borders */
+  --border:       #e5e7eb; /* gray-200 */
+  --border-muted: #374151; /* gray-700 (used in dark) */
+
+  /* Radius */
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Shadows (subtle, enterprise-style) */
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-2: 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-3: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+.dark {
+  /* Backgrounds */
+  --bg-canvas: #0b0e14;  /* near-black */
+  --bg-card:   #0f1115;  /* dark panel */
+
+  /* Text */
+  --text-primary: #f8fafc; /* slate-50 */
+  --text-muted:   #9ca3af; /* gray-400 */
+
+  /* Accent (keep consistent for clarity) */
+  --accent:       #3b82f6; /* blue-500 */
+  --accent-hover: #2563eb; /* blue-600 */
+
+  /* Semantic states (tuned for dark) */
+  --state-success: #22c55e; /* green-500 */
+  --state-warning: #f59e0b; /* amber-500 */
+  --state-danger:  #ef4444; /* red-500 */
+  --state-info:    #38bdf8; /* sky-400 */
+
+  /* Borders */
+  --border:       #2b2f36; /* dark border */
+  --border-muted: #4b5563; /* gray-600 */
+
+  /* Radius: same */
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Shadows: flatter in dark */
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-2: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-3: 0 10px 24px rgba(0,0,0,0.5);
+}

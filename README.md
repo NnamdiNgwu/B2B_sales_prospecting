@@ -394,3 +394,13 @@ python -m pytest -q
 
 curl -s http://127.0.0.1:8000/api/health
 curl -s -X POST http://127.0.0.1:8000/api/llm/generate -H 'content-type: application/json' -d
+
+
+Wired but not displayed (commented/omitted in current Dashboard)
+
+Prospects list and filters via:
+Frontend service: ProspectService → GET /api/prospects with query filters (search, industry, status, companySize, location, tags, leadScoreMin/Max)
+Hook: useProspects
+UI components: ProspectTable, ProspectPipeline, MetricsCards
+Backend route for it: /api/prospects with mock data in ProspectService
+In
